@@ -299,6 +299,7 @@ void Init_msieve() {
   char msieve_version_string[5];
   sprintf (msieve_version_string, "%d.%02d", MSIEVE_MAJOR_VERSION, MSIEVE_MINOR_VERSION);
   rb_define_const (cMsieve, "MSIEVE_VERSION", rb_str_new2 (msieve_version_string));
+  rb_define_const (cMsieve, "VERSION",        rb_str_new2 ("0.1.0"));
   
   rb_define_alloc_func (cMsieve, msieve_alloc);
   rb_define_method (cMsieve, "initialize",    r_msieve_initialize, -1);

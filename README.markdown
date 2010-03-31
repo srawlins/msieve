@@ -27,11 +27,11 @@ You can also include elementary functions as listed in msieve's readme. I quote:
 > Starting with v1.08, the inputs to msieve can be integer arithmetic 
 > expressions using any of the following operators:
 > 
->    + -  plus, minus        (lowest priority)
->    %    integer remainder
->    * /  multiply, integer divide
->    ^    power
->    ( )  grouping           (highest priority)
+> * \+ -  plus, minus        (lowest priority)
+> * %    integer remainder
+> * \* /  multiply, integer divide
+> * ^    power
+> * ( )  grouping           (highest priority)
 
 Examples:
 
@@ -50,13 +50,13 @@ Caveat
 
 msieve has two headers that have the line
 
-#include <util.h>
+<pre><code>#include &lt;util.h&gt;</code></pre>
 
 This is no good here, because mkmf always puts Ruby's include paths before the
 ones you request. So it ends up including ruby/util.h. No good! I had to hack
 my copy of msieve, the msieve.h and mp.h files, to change that line to
 
-#include "util.h"
+<pre><code>#include "util.h"</code></pre>
 
 and boom! Everything works. No word on how to... autotically do this in the
 gem? I am wholly against toying with the global vars that mkmf sets up, in
@@ -93,4 +93,4 @@ Todo
 * Oh, verify that anything works on !windows.
 * Documentation
 * Write Jason about that caveat
-* Versioning, CHANGELOG, gemify, etc.
+* CHANGELOG, gemify, etc.
