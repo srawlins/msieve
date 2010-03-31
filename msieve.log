@@ -140,3 +140,40 @@ Tue Mar 30 23:16:10 2010  p3 factor: 241
 Tue Mar 30 23:16:10 2010  p3 factor: 587
 Tue Mar 30 23:16:10 2010  p7 factor: 1592069
 Tue Mar 30 23:16:10 2010  elapsed time 00:00:00
+Tue Mar 30 23:46:46 2010  
+Tue Mar 30 23:46:46 2010  
+Tue Mar 30 23:46:46 2010  Msieve v. 1.44
+Tue Mar 30 23:46:46 2010  random seeds: ad8171c0 8150feb0
+Tue Mar 30 23:46:46 2010  factoring 1234 (4 digits)
+Tue Mar 30 23:46:46 2010  p1 factor: 2
+Tue Mar 30 23:46:46 2010  p3 factor: 617
+Tue Mar 30 23:46:46 2010  elapsed time 00:00:00
+Tue Mar 30 23:47:02 2010  
+Tue Mar 30 23:47:02 2010  
+Tue Mar 30 23:47:02 2010  Msieve v. 1.44
+Tue Mar 30 23:47:02 2010  random seeds: f6593ea0 1ce249bb
+Tue Mar 30 23:47:02 2010  factoring 10000 (5 digits)
+Tue Mar 30 23:47:02 2010  p1 factor: 2
+Tue Mar 30 23:47:02 2010  p1 factor: 2
+Tue Mar 30 23:47:02 2010  p1 factor: 2
+Tue Mar 30 23:47:02 2010  p1 factor: 2
+Tue Mar 30 23:47:02 2010  p1 factor: 5
+Tue Mar 30 23:47:02 2010  p1 factor: 5
+Tue Mar 30 23:47:02 2010  p1 factor: 5
+Tue Mar 30 23:47:02 2010  p1 factor: 5
+Tue Mar 30 23:47:02 2010  elapsed time 00:00:00
+Tue Mar 30 23:49:05 2010  
+Tue Mar 30 23:49:05 2010  
+Tue Mar 30 23:49:05 2010  Msieve v. 1.44
+Tue Mar 30 23:49:05 2010  random seeds: 106121a0 440be9d6
+Tue Mar 30 23:49:05 2010  factoring 11111111111111111 (17 digits)
+Tue Mar 30 23:49:05 2010  p7 factor: 2071723
+Tue Mar 30 23:49:05 2010  p10 factor: 5363222357
+Tue Mar 30 23:49:05 2010  elapsed time 00:00:00
+Tue Mar 30 23:50:07 2010  
+Tue Mar 30 23:50:07 2010  
+Tue Mar 30 23:50:07 2010  Msieve v. 1.44
+Tue Mar 30 23:50:07 2010  random seeds: 87147198 cd8d8df8
+Tue Mar 30 23:50:07 2010  factoring 1111111111111111111 (19 digits)
+Tue Mar 30 23:50:07 2010  prp19 factor: 1111111111111111111
+Tue Mar 30 23:50:07 2010  elapsed time 00:00:00

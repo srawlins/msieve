@@ -10,17 +10,40 @@ It's entirely simple right now, and there is probably a lot to be desired. In an
 
 <pre><code>$irb -r lib/msieve --simple-prompt
 >> m = Msieve.new("1234567890")
-=> #<Msieve:0x14418e0>
+=> #&lt;Msieve:0x14418e0&gt;
 >> m.factor!
 => [2, 3, 3, 5, 3607, 3803]
 >> n = Msieve.new("235711131719")
-=> #<Msieve:0x14f28c0>
+=> #&lt;Msieve:0x14f28c0&gt;
 >> n.factor!
 => [7, 4363, 7717859]
 >> p = Msieve.new("149162536496481")
-=> #<Msieve:0x15b3140>
+=> #&lt;Msieve:0x15b3140&gt;
 >> p.factor!
 => [3, 7549, 48437, 135979]</code></pre>
+
+You can also include elementary functions as listed in msieve's readme. I quote:
+
+> Starting with v1.08, the inputs to msieve can be integer arithmetic 
+> expressions using any of the following operators:
+> 
+>    + -  plus, minus        (lowest priority)
+>    %    integer remainder
+>    * /  multiply, integer divide
+>    ^    power
+>    ( )  grouping           (highest priority)
+
+Examples:
+
+<pre><code>$irb -r lib\msieve --simple-prompt
+>> m = Msieve.new("(10^17-1)/9")
+=> #&lt;Msieve:0x13ea4a0&gt;
+>> m.factor!
+=> [2071723, 5363222357]
+>> m = Msieve.new("(10^19-1)/9")
+=> #&lt;Msieve:0x1467b80&gt;
+>> m.factor!
+=> [1111111111111111111]</code></pre>
 
 Caveat
 ------
@@ -48,7 +71,7 @@ It has some bugs:
 <pre><code>$irb -r lib\msieve --simple-prompt
 
 >> m = Msieve.new(99999999)
-=> #<Msieve:0x14e26c0>
+=> #&lt;Msieve:0x14e26c0&gt;
 >> m.input
 => "99999999"
 >> m.factor!
