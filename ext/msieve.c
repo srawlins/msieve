@@ -46,6 +46,9 @@ static VALUE r_msieve_##fname(VALUE self)    \
 }
 
 VALUE cMsieve;
+VALUE cMsieve_Factor;
+
+void msieve_set_factors(VALUE obj);
 
 /*
  * Swiped from msieve's demo for now. Will push to Ruby (and maybe GMP) later.
@@ -129,27 +132,27 @@ VALUE msieve_alloc(VALUE klass) {
   return obj;
 }
 
-/*
- * call-seq:
- *   Msieve.new(hash)
- *
- * Creates a new Msieve object (state), with certain arguments and variables
- * set with <i>hash</i>.
- */
-VALUE r_msievesg_new(int argc, VALUE *argv, VALUE klass)
-{
-  msieve_obj *res_val;
-  VALUE res;
-  (void)klass;
+// /*
+ // * call-seq:
+ // *   Msieve.new(hash)
+ // *
+ // * Creates a new Msieve object (state), with certain arguments and variables
+ // * set with <i>hash</i>.
+ // */
+// VALUE r_msievesg_new(int argc, VALUE *argv, VALUE klass)
+// {
+  // msieve_obj *res_val;
+  // VALUE res;
+  // (void)klass;
 
-  if (argc > 2)
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0, 1, or 2)", argc);
+  // if (argc > 2)
+    // rb_raise(rb_eArgError, "wrong # of arguments(%d for 0, 1, or 2)", argc);
 
-  msieve_make_struct (res, res_val);
-  rb_obj_call_init (res, argc, argv);
+  // msieve_make_struct (res, res_val);
+  // rb_obj_call_init (res, argc, argv);
 
-  return res;
-}
+  // return res;
+// }
 
 VALUE r_msieve_initialize(int argc, VALUE *argv, VALUE self)
 {
@@ -200,7 +203,7 @@ VALUE r_msieve_initialize(int argc, VALUE *argv, VALUE self)
   return Qnil;
 }
 
-VALUE r_msieve_run_bang(VALUE self)
+VALUE r_msieve_factor_bang(VALUE self)
 {
   msieve_obj *self_val;
   msieve_get_struct (self, self_val);
@@ -211,7 +214,40 @@ VALUE r_msieve_run_bang(VALUE self)
     rb_raise (rb_eRuntimeError, "current factorization was interrupted");
   }
   
-  return self;
+  msieve_set_factors(self);
+  
+  return rb_iv_get (self, "@factors");
+}
+
+void msieve_set_factors(VALUE obj) {
+  msieve_obj *obj_val;
+  msieve_get_struct (obj, obj_val);
+  VALUE factors_array = rb_ary_new ();
+  
+  //rb_iv_set (obj, "@factors", rb_ary_new);
+  
+  msieve_factor *factor = obj_val->factors;
+  while (factor != NULL) {
+    VALUE factor_type;
+
+    if (factor->factor_type == MSIEVE_PRIME)
+      factor_type = rb_symbol("prime");
+    else if (factor->factor_type == MSIEVE_COMPOSITE)
+      factor_type = rb_symbol("composite");
+    else
+      factor_type = rb_symbol("probably_prime");
+      
+    VALUE factor_obj = rb_funcall (cMsieve_Factor,
+                                   rb_intern("new"),
+                                   3,
+                                   factor_type,
+                                   rb_str_new2(factor->number),
+                                   INT2FIX((int32)strlen(factor->number)));
+    rb_ary_push(factors_array, factor_obj);
+
+    factor = factor->next;
+  }
+  rb_iv_set (obj, "@factors", factors_array);
 }
 
 VALUE r_msieve_seed1(VALUE self)
@@ -235,26 +271,56 @@ DEFUN_0ARG_UINT32(cache_size2)
 DEFUN_0ARG_UINT32(num_threads)
 DEFUN_0ARG_UINT32(mem_mb)
 
+VALUE r_msieve_factor_initialize(int argc, VALUE *argv, VALUE self) {
+  VALUE factor_type, number, digits;
+  
+  rb_scan_args (argc, argv, "3", &factor_type, &number, &digits);
+  rb_iv_set (self, "@factor_type", factor_type);
+  rb_iv_set (self, "@number", number);
+  rb_iv_set (self, "@digits", digits);
+  
+  return Qnil;
+}
+
+VALUE r_msieve_factor_inspect(VALUE self) {
+  return rb_iv_get (self, "@number");
+}
+
+VALUE r_msieve_factor_to_i(VALUE self) {
+  return rb_funcall(rb_iv_get (self, "@number"), rb_intern("to_i"), 0);
+}
+
+VALUE r_msieve_factor_to_s(VALUE self) {
+  return rb_iv_get (self, "@number");
+}
+
 void Init_msieve() {
   cMsieve = rb_define_class ("Msieve", rb_cObject);
   char msieve_version_string[5];
   sprintf (msieve_version_string, "%d.%02d", MSIEVE_MAJOR_VERSION, MSIEVE_MINOR_VERSION);
   rb_define_const (cMsieve, "MSIEVE_VERSION", rb_str_new2 (msieve_version_string));
   
-  //rb_define_singleton_method (cMsieve, "new", r_msievesg_new, -1);
   rb_define_alloc_func (cMsieve, msieve_alloc);
-  rb_define_method (cMsieve, "initialize", r_msieve_initialize, -1);
-  rb_define_method (cMsieve, "run!", r_msieve_run_bang, 0);
-  rb_define_method (cMsieve, "input", r_msieve_input, 0);
-  rb_define_method (cMsieve, "seed1", r_msieve_seed1, 0);
-  rb_define_method (cMsieve, "seed2", r_msieve_seed2, 0);
+  rb_define_method (cMsieve, "initialize",    r_msieve_initialize, -1);
+  rb_define_method (cMsieve, "factor!",       r_msieve_factor_bang, 0);
+  rb_define_method (cMsieve, "input",         r_msieve_input, 0);
+  rb_define_method (cMsieve, "seed1",         r_msieve_seed1, 0);
+  rb_define_method (cMsieve, "seed2",         r_msieve_seed2, 0);
   rb_define_method (cMsieve, "max_relations", r_msieve_max_relations, 0);
-  rb_define_method (cMsieve, "nfs_lower", r_msieve_nfs_lower, 0);
-  rb_define_method (cMsieve, "nfs_upper", r_msieve_nfs_upper, 0);
-  rb_define_method (cMsieve, "cache_size1", r_msieve_cache_size1, 0);
-  rb_define_method (cMsieve, "cache_size2", r_msieve_cache_size2, 0);
-  rb_define_method (cMsieve, "num_threads", r_msieve_num_threads, 0);
-  rb_define_method (cMsieve, "mem_mb", r_msieve_mem_mb, 0);
+  rb_define_method (cMsieve, "nfs_lower",     r_msieve_nfs_lower, 0);
+  rb_define_method (cMsieve, "nfs_upper",     r_msieve_nfs_upper, 0);
+  rb_define_method (cMsieve, "cache_size1",   r_msieve_cache_size1, 0);
+  rb_define_method (cMsieve, "cache_size2",   r_msieve_cache_size2, 0);
+  rb_define_method (cMsieve, "num_threads",   r_msieve_num_threads, 0);
+  rb_define_method (cMsieve, "mem_mb",        r_msieve_mem_mb, 0);
+  rb_define_attr (cMsieve, "factors", 1, 0);
   
   cMsieve_Factor = rb_define_class_under (cMsieve, "Factor", rb_cObject);
+  rb_define_method (cMsieve_Factor, "initialize", r_msieve_factor_initialize, -1);
+  rb_define_method (cMsieve_Factor, "inspect",    r_msieve_factor_inspect, 0);
+  rb_define_method (cMsieve_Factor, "to_i",       r_msieve_factor_to_i, 0);
+  rb_define_method (cMsieve_Factor, "to_s",       r_msieve_factor_to_s, 0);
+  rb_define_attr (cMsieve_Factor, "factor_type", 1, 0);
+  rb_define_attr (cMsieve_Factor, "number",      1, 0);
+  rb_define_attr (cMsieve_Factor, "digits",      1, 0);
 }
