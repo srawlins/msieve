@@ -82,7 +82,6 @@ It has some bugs:
 Todo
 ----
 
-* Tests
 * Fix weird crashing bug that occurs sporadically
 * Get all options working that msieve_obj_new() accepts
 * Internal logging???
@@ -92,5 +91,4 @@ Todo
 * Make Ruby bindings for GMP-ECM, then integrate those, haha.
 * Oh, verify that anything works on !windows.
 * Documentation
-* Write Jason about that caveat
 * CHANGELOG, gemify, etc.
