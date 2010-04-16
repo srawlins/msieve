@@ -180,11 +180,6 @@ VALUE r_msieve_initialize(int argc, VALUE *argv, VALUE self)
     rb_raise (rb_eArgError, "options must be a Hash");
   }
   
-  hash_value = rb_hash_aref(hash, rb_symbol("mem_mb"));
-  if (hash_value != Qnil) {
-    self_val->mem_mb = FIX2INT(hash_value);
-  }
-  
   hash_value = rb_hash_aref(hash, rb_symbol("quiet"));
   if (hash_value != Qnil) {
     self_val->flags &= ~(MSIEVE_FLAG_USE_LOGFILE | MSIEVE_FLAG_LOG_TO_STDOUT);
@@ -198,6 +193,11 @@ VALUE r_msieve_initialize(int argc, VALUE *argv, VALUE self)
   hash_value = rb_hash_aref(hash, rb_symbol("num_threads"));
   if (hash_value != Qnil) {
     self_val->num_threads = FIX2INT(hash_value);
+  }
+  
+  hash_value = rb_hash_aref(hash, rb_symbol("mem_mb"));
+  if (hash_value != Qnil) {
+    self_val->mem_mb = FIX2INT(hash_value);
   }
   
   return Qnil;
