@@ -1,3 +1,7 @@
+ext/Makefile
+ext/mkmf.long
 ext/msieve.log
+ext/*.o
+ext/*.so
 msieve.log
 *.gem

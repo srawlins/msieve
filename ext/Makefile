@@ -4,13 +4,13 @@ SHELL = /bin/sh
 #### Start of system configuration section. ####
 
 srcdir = .
-topdir = /C/Ruby19/include/ruby-1.9.1
-hdrdir = /C/Ruby19/include/ruby-1.9.1
-arch_hdrdir = C:/Ruby19/include/ruby-1.9.1/$(arch)
+topdir = /C/Ruby191/include/ruby-1.9.1
+hdrdir = /C/Ruby191/include/ruby-1.9.1
+arch_hdrdir = C:/Ruby191/include/ruby-1.9.1/$(arch)
 VPATH = $(srcdir):$(arch_hdrdir)/ruby:$(hdrdir)/ruby
 
 DESTDIR = C:
-prefix = $(DESTDIR)/Ruby19
+prefix = $(DESTDIR)/Ruby191
 exec_prefix = $(prefix)
 vendorhdrdir = $(rubyhdrdir)/vendor_ruby
 sitehdrdir = $(rubyhdrdir)/site_ruby
@@ -60,7 +60,7 @@ warnflags = -Wall -Wno-parentheses
 CFLAGS   =   $(cflags)  -Wall -W -O6 -g 
 INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
-CPPFLAGS = -DHAVE_GMP_H -DHAVE_MSIEVE_H -I\Ruby19\devkit\msys\1.0.11\projects\msieve-1.44\include -I\Ruby19\devkit\msys\1.0.11\usr\local\gmp-5.0.1/include  $(DEFS) $(cppflags)
+CPPFLAGS = -DHAVE_GMP_H -DHAVE_MSIEVE_H -I\Ruby191\devkit\msys\1.0.11\projects\msieve-1.46\include -I\Ruby191\devkit\msys\1.0.11\usr\local/include  $(DEFS) $(cppflags)
 CXXFLAGS = $(CFLAGS)  $(cxxflags)
 ldflags  = -L. 
 dldflags =  -Wl,--enable-auto-image-base,--enable-auto-import
@@ -76,7 +76,7 @@ RUBY_SO_NAME = msvcrt-ruby191
 arch = i386-mingw32
 sitearch = i386-msvcrt
 ruby_version = 1.9.1
-ruby = C:/Ruby19/bin/ruby
+ruby = C:/Ruby191/bin/ruby
 RUBY = $(ruby)
 RM = rm -f
 RM_RF = $(RUBY) -run -e rm -- -rf
@@ -91,8 +91,8 @@ COPY = cp
 
 preload = 
 
-libpath = . $(libdir) \Ruby19\devkit\msys\1.0.11\projects\msieve-1.44 \Ruby19\devkit\msys\1.0.11\usr\local\gmp-5.0.1/lib
-LIBPATH =  -L. -L$(libdir) -L\Ruby19\devkit\msys\1.0.11\projects\msieve-1.44 -L\Ruby19\devkit\msys\1.0.11\usr\local\gmp-5.0.1/lib
+libpath = . $(libdir) \Ruby191\devkit\msys\1.0.11\usr\local/lib
+LIBPATH =  -L. -L$(libdir) -L\Ruby191\devkit\msys\1.0.11\usr\local/lib
 DEFFILE = 
 
 CLEANFILES = mkmf.log

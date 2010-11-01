@@ -228,7 +228,7 @@ void msieve_set_factors(VALUE obj) {
   
   msieve_factor *factor = obj_val->factors;
   while (factor != NULL) {
-    VALUE factor_type;
+    VALUE factor_type, factor_obj;
 
     if (factor->factor_type == MSIEVE_PRIME)
       factor_type = rb_symbol("prime");
@@ -237,12 +237,12 @@ void msieve_set_factors(VALUE obj) {
     else
       factor_type = rb_symbol("probably_prime");
       
-    VALUE factor_obj = rb_funcall (cMsieve_Factor,
-                                   rb_intern("new"),
-                                   3,
-                                   factor_type,
-                                   rb_str_new2(factor->number),
-                                   INT2FIX((int32)strlen(factor->number)));
+    factor_obj = rb_funcall (cMsieve_Factor,
+                             rb_intern("new"),
+                             3,
+                             factor_type,
+                             rb_str_new2(factor->number),
+                             INT2FIX((int32)strlen(factor->number)));
     rb_ary_push(factors_array, factor_obj);
 
     factor = factor->next;
