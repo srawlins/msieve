@@ -22,7 +22,7 @@ It's entirely simple right now, and there is probably a lot to be desired. In an
     >> p.factor!
     => [3, 7549, 48437, 135979]</code></pre>
 
-You can also include elementary functions as listed in msieve's readme. I quote:
+You can also include elementary arithmetic as listed in msieve's readme. I quote:
 
 > Starting with v1.08, the inputs to msieve can be integer arithmetic 
 > expressions using any of the following operators:
@@ -44,6 +44,18 @@ Examples:
     => #<Msieve:0x1467b80>
     >> m.factor!
     => [1111111111111111111]
+    
+Options
+-------
+
+The `Msieve.new()` method takes first a number to factor. This "number" can be a Fixnum, Bignum, or String. Second, it
+takes a hash of options. These roughly correspond to the msieve demo program's cmd-line options:
+
+* `:logfile_name =>` _`file_name`_ - Use _`file_name`_ as the log file instead of `msieve.log`.
+* `:quiet => true` - A bit misleading, but it doesn't generate any log information.
+* `:max_relations =>` _`number`_ - Stop sieving after finding _`number`_ relations.
+* `:num_threads =>` _`number`_ - Use at most _`number`_ threads.
+* `:mem_mb =>` _`mb`_ - Hint for number of megabytes of memory for postprocessing.
 
 Caveat
 ------
