@@ -97,6 +97,10 @@ void get_random_seeds(uint32 *seed1, uint32 *seed2) {
 }
 
 void msieve_free(void *p) {
+  msieve_obj *msieve_val = (msieve_obj *) p;
+  if (msieve_val->logfile_name != NULL) {
+    free(msieve_val->logfile_name);
+  }
   msieve_obj_free(p);
 }
 
@@ -172,12 +176,20 @@ VALUE r_msieve_initialize(int argc, VALUE *argv, VALUE self)
   else {
     rb_raise (rb_eArgError, "integer must be Numeric or String");
   }
+  
   integer_val = RSTRING_PTR(str);
   self_val->input = integer_val;
   
   if (NIL_P(hash)) { hash = rb_hash_new (); }
   if (! HASH_P(hash)) {
     rb_raise (rb_eArgError, "options must be a Hash");
+  }
+  
+  hash_value = rb_hash_aref(hash, rb_symbol("logfile_name"));
+  if (hash_value != Qnil) {
+    char *logfile = malloc(strlen(StringValuePtr(hash_value))+1);
+    strcpy (logfile,StringValuePtr(hash_value));
+    self_val->logfile_name = logfile;
   }
   
   hash_value = rb_hash_aref(hash, rb_symbol("quiet"));

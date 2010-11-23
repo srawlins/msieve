@@ -1,7 +1,11 @@
 ext/Makefile
-ext/mkmf.long
+ext/mkmf.log
 ext/msieve.log
 ext/*.o
 ext/*.so
 msieve.log
 *.gem
+.yardoc/*
+.yardoc
+doc/*
+doc

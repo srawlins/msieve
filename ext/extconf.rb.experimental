@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'mkmf'
+
+dir_config('msieve')
+dir_config('gmp')
+
+#have_header('gmp.h')
+unless have_header('msieve.h')
+  $stderr.puts "can't find msieve.h, try --with-msieve-include=<path>"
+  ok = false
+end
+
+unless have_library('msieve', 'msieve_obj_new', 'msieve.h')
+#unless have_library('msieve')
+  $stderr.puts "can't find -lmsieve, try --with-msieve-lib=<path>"
+  ok = false
+end
+
+create_makefile('msieve')

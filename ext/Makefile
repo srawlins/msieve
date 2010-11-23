@@ -60,7 +60,7 @@ warnflags = -Wall -Wno-parentheses
 CFLAGS   =   $(cflags)  -Wall -W -O6 -g 
 INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
-CPPFLAGS = -DHAVE_GMP_H -DHAVE_MSIEVE_H -I\Ruby191\devkit\msys\1.0.11\projects\msieve-1.46\include -I\Ruby191\devkit\msys\1.0.11\usr\local/include  $(DEFS) $(cppflags)
+CPPFLAGS = -DHAVE_GMP_H -DHAVE_MSIEVE_H -I\Ruby191\devkit\msys\1.0.11\projects\msieve-1.46\include -I\Ruby191\devkit\msys\1.0.11\usr\local\gmp-5.0.1/include  $(DEFS) $(cppflags)
 CXXFLAGS = $(CFLAGS)  $(cxxflags)
 ldflags  = -L. 
 dldflags =  -Wl,--enable-auto-image-base,--enable-auto-import
@@ -91,8 +91,8 @@ COPY = cp
 
 preload = 
 
-libpath = . $(libdir) \Ruby191\devkit\msys\1.0.11\usr\local/lib
-LIBPATH =  -L. -L$(libdir) -L\Ruby191\devkit\msys\1.0.11\usr\local/lib
+libpath = . $(libdir) \Ruby191\devkit\msys\1.0.11\projects\msieve-1.46 \Ruby191\devkit\msys\1.0.11\usr\local\gmp-5.0.1/lib
+LIBPATH =  -L. -L$(libdir) -L\Ruby191\devkit\msys\1.0.11\projects\msieve-1.46 -L\Ruby191\devkit\msys\1.0.11\usr\local\gmp-5.0.1/lib
 DEFFILE = 
 
 CLEANFILES = mkmf.log
