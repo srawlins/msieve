@@ -3,9 +3,12 @@ ext/mkmf.log
 ext/msieve.log
 ext/*.o
 ext/*.so
+ext/msieve.bundle
+msieve.dat
 msieve.log
 *.gem
 .yardoc/*
 .yardoc
 doc/*
 doc
+**/*.rbc

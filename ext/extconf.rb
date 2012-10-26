@@ -16,6 +16,8 @@ unless have_library('gmp', '__gmpz_init')
   ok = false
 end
 
+have_library('z')
+have_library('ecm')
 unless have_library('msieve', 'msieve_obj_new')
   $stderr.puts "can't find -lmsieve, try --with-msieve-lib=<path>"
   ok = false

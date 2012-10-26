@@ -98,7 +98,8 @@ void get_random_seeds(uint32 *seed1, uint32 *seed2) {
 
 void msieve_free(void *p) {
   msieve_obj *msieve_val = (msieve_obj *) p;
-  if (msieve_val->logfile_name != NULL) {
+  if (msieve_val->logfile_name != NULL &&
+      strcmp(msieve_val->logfile_name, MSIEVE_DEFAULT_LOGFILE)) {
     free(msieve_val->logfile_name);
   }
   msieve_obj_free(p);
